@@ -11,7 +11,7 @@ public class BSTree
 
    public BSTree()
    {
-   
+	   
        
    }
 
@@ -29,6 +29,11 @@ public class BSTree
      */
    public void insert(Integer target)
    {
+	   if(isEmpty()) {
+		   root = new BSTNode<Integer>(target, null, null);
+	   }else {
+		   root.insert(target);
+	   }
    }
 
 
@@ -38,7 +43,11 @@ public class BSTree
      */
    public Integer retrieve(Integer target)
    {
-	return null;
+	   if(isEmpty()) {
+		   return null;
+	   }else {
+		   return root.retrieve(target);
+	   }
    }
 
 
@@ -52,7 +61,11 @@ public class BSTree
      */
    public int retrieveDepth(Integer target)
    {
-	return 0;
+	   if(isEmpty()) {
+		   return 0;
+	   }else {
+		   return root.retrieveDepth(target);
+	   }
        
    }
 
@@ -95,7 +108,11 @@ public class BSTree
     */
    public Integer largest()
    {
-	return null;
+	   if(isEmpty()) {
+		   return null;
+	   }else {
+		   return root.getLargest();
+	   }
    
    }
 
@@ -117,9 +134,34 @@ public class BSTree
             //hey look, an anonymous class 		       
             new Consumer<Integer>() //here is the type 
             {
+            	
                public void accept(Integer i)
                {
-               //need to add some code here...
+            	   L.add(i);
+               }
+            });
+      }
+      return L;
+   
+   
+   }
+   
+   
+   public List<Integer> toPreOrderList()
+   {
+       
+      List<Integer> L= new ArrayList<Integer>();
+   
+      if(root != null)
+      {
+         root.preOrderTraversal(
+            //hey look, an anonymous class 		       
+            new Consumer<Integer>() //here is the type 
+            {
+            	
+               public void accept(Integer i)
+               {
+            	   L.add(i);
                }
             });
       }
@@ -130,13 +172,24 @@ public class BSTree
 
 
 
-
     /*
       Returns the sum of all the integers in the Tree
      */
    public int sum()
    {
-	return 0;
+	   if(isEmpty()) {
+		   return 0;
+	   }
+	   
+	   List<Integer> list = this.toList();
+	   
+	   int count = 0;
+	   
+	   for(int i = 0; i < list.size(); i++) {
+		   count += list.get(i);
+	   }
+	   
+	   return count;
    }
 
 
@@ -153,7 +206,10 @@ public class BSTree
      */
    public boolean myEquals(BSTree that)
    {
-	return false;
+	   List<Integer> thisList = this.toPreOrderList();
+	   List<Integer> thatList = that.toPreOrderList();
+	   
+	   return thisList.equals(thatList);
    
    }
 
